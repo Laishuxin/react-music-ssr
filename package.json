@@ -16,7 +16,8 @@
     "serve": "yarn build && cross-env NODE_ENV=production node --experimental-modules dist/server.js",
     "clean": "rimraf dist/",
     "prettier": "prettier --write .",
-    "copy-files": "copyfiles static/* dist/assets && copyfiles index.html dist"
+    "copy-files": "copyfiles static/* dist/assets && copyfiles index.html dist",
+    "prepare": "husky install"
   },
   "dependencies": {
     "autoprefixer": "^10.3.1",
