@@ -1,7 +1,7 @@
 import React from 'react'
 
 import { ReactComponent } from '@/assets/logo.svg'
-import { LinkButton } from '.'
+import { LinkButton } from './button'
 
 export default function Logo(
   props: React.SVGProps<SVGSVGElement> & { title?: string; link?: boolean },
