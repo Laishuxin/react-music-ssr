@@ -6,6 +6,7 @@ import serveStatic from 'serve-static'
 import compression from 'compression'
 import { getApi } from './src/server/routes/api'
 import { ServerResponse } from 'http'
+import { Helmet } from 'react-helmet'
 
 const isTest = process.env.NODE_ENV === 'test' || !!process.env.VITE_TEST_BUILD
 
@@ -50,6 +51,7 @@ const createServer = async (
   }
 
   app.use('/api', getApi)
+  app.use(express.static(path.join(__dirname, 'public')))
 
   app.use('*', async ({ originalUrl }, res) => {
     try {
@@ -76,6 +78,17 @@ const createServer = async (
         // Somewhere a `<Redirect>` was rendered
         return res.redirect(301, context.url)
       }
+
+      if (context.css) {
+        template = template.replace('/* app-style */', context.css.join(`\n`))
+      }
+
+      const helmet = Helmet.renderStatic()
+      template = template.replace(
+        '<!--react-helmet-->',
+        `${helmet.title.toString()}
+      ${helmet.meta.toString()}`,
+      )
 
       const html = template.replace(`<!--app-html-->`, appHtml)
 

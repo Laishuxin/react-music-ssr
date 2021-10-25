@@ -1,31 +1,45 @@
-import React from 'react'
-import { Route, RouteComponentProps, Switch } from 'react-router-dom'
-import Home from './pages/Home'
-// @ts-ignore
-import Rank from './pages/rank'
-import Singer from './pages/singer'
-import Category from './pages/category'
-import Video from './pages/video'
-import Mv from './pages/mv'
-import NotFound from './pages/not-found'
+import React, { Fragment } from 'react'
+import { Switch } from 'react-router-dom'
+import { RouteConfigComponentProps, renderRoutes } from 'react-router-config'
+import style from './index.css'
+import { StaticContext } from 'types'
+import Header from './components/common/header'
+import Footer from './components/common/footer'
+import { Helmet } from 'react-helmet'
 
-interface AppProps extends RouteComponentProps {}
-
+interface AppProps extends RouteConfigComponentProps {}
 const App = (props: AppProps) => {
+  const { staticContext, route } = props
+  if (staticContext) {
+    const context: StaticContext = staticContext as StaticContext
+    if (!context.css) {
+      context.css = []
+    }
+    context.css.push(style)
+  }
+
   return (
-    <div className='app'>
-      <header>header</header>
-      <Switch>
-        <Route path='/' exact={true} component={Home} />
-        <Route path='/singer' component={Singer} />
-        <Route path='/rank' component={Rank} />
-        <Route path='/category' component={Category} />
-        <Route path='/video' component={Video} />
-        <Route path='/mv' component={Mv} />
-        <Route path='/*' component={NotFound} />
-      </Switch>
-      <footer>footer</footer>
-    </div>
+    <Fragment>
+      <Helmet>
+        <title>react music - 音乐伴你行</title>
+        <meta charSet='utf-8' />
+        <meta name='description' content='音乐伴你行' />
+        <meta
+          name='keywords'
+          content='音乐,React音乐,在线听歌,音乐下载,音乐播放器,音乐网站,MV,巅峰榜,音乐排行榜,翻译歌曲,热门歌曲,经典老歌'
+        ></meta>
+        <meta
+          name='description'
+          content='海量音乐在线试听、最流行音乐在线首发、歌词翻译、手机铃声下载、高品质音乐试听、正版音乐下载、免费空间背景音乐设置、MV观看等，是互联网音乐播放和下载的首选'
+        ></meta>
+      </Helmet>
+
+      <Header />
+      <main>
+        <Switch>{renderRoutes(route?.routes)}</Switch>
+      </main>
+      <Footer />
+    </Fragment>
   )
 }
 

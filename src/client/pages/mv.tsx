@@ -1,8 +1,12 @@
-import React from 'react'
+import React, { Fragment } from 'react'
+import PageTitle from '../components/common/page-title'
 export default function Mv() {
   return (
-    <div>
-      <h1>Mv</h1>
-    </div>
+    <Fragment>
+      <PageTitle title='MV' />
+      <div>
+        <h1>MV</h1>
+      </div>
+    </Fragment>
   )
 }
