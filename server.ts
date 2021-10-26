@@ -72,7 +72,7 @@ const createServer = async (
       }
 
       const context: any = {}
-      const appHtml = render(url, context)
+      const { appHTML, initState } = render(url, context)
 
       if (context.url) {
         // Somewhere a `<Redirect>` was rendered
@@ -80,7 +80,10 @@ const createServer = async (
       }
 
       if (context.css) {
-        template = template.replace('/* app-style */', context.css.join(`\n`))
+        template = template.replace(
+          '/* app-style */',
+          [...context.css.values()].join(`\n`),
+        )
       }
 
       const helmet = Helmet.renderStatic()
@@ -90,8 +93,12 @@ const createServer = async (
       ${helmet.meta.toString()}`,
       )
 
-      const html = template.replace(`<!--app-html-->`, appHtml)
+      template = template.replace(
+        `<!--init-state-->`,
+        `<script>window.INIT_STATE = ${JSON.stringify(initState)}</script>`,
+      )
 
+      const html = template.replace(`<!--app-html-->`, appHTML)
       res.status(200).set({ 'Content-Type': 'text/html' }).end(html)
     } catch (e: any) {
       !isProd && vite.ssrFixStacktrace(e)

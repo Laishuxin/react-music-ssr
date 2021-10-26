@@ -20,10 +20,11 @@
     "skipLibCheck": true,
     "sourceMap": true,
     "target": "ES2020",
-    "types": ["vite-plugin-svgr/client"],
+    "types": ["vite-plugin-svgr/client", "vite/client"],
     "paths": {
       "@/*": ["./src/*"]
     }
   },
-  "include": ["src/**/*", "types/*", "*"]
+  "include": ["src/**/*", "types/*", "*"],
+  "exclude": ["dist"]
 }

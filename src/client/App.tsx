@@ -1,23 +1,17 @@
 import React, { Fragment } from 'react'
+import { Helmet } from 'react-helmet'
 import { Switch } from 'react-router-dom'
 import { RouteConfigComponentProps, renderRoutes } from 'react-router-config'
-import style from './index.css'
-import { StaticContext } from 'types'
+import { Context } from 'types/index'
 import Header from './components/common/header'
 import Footer from './components/common/footer'
-import { Helmet } from 'react-helmet'
+import { setStyle } from './shared/utils'
+import style from './index.css'
 
 interface AppProps extends RouteConfigComponentProps {}
 const App = (props: AppProps) => {
   const { staticContext, route } = props
-  if (staticContext) {
-    const context: StaticContext = staticContext as StaticContext
-    if (!context.css) {
-      context.css = []
-    }
-    context.css.push(style)
-  }
-
+  setStyle(staticContext as Context, App.name, style)
   return (
     <Fragment>
       <Helmet>
