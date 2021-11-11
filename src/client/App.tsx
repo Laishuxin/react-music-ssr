@@ -6,14 +6,16 @@ import { Context } from 'types/index'
 import Header from './components/common/header'
 import Footer from './components/common/footer'
 import { setStyle } from './shared/utils'
-import style from './index.css'
+import { GlobalStyle } from './style'
+import { IconStyle } from '@/assets/iconfont/iconfont'
+// import style from './index.css'
 
 interface AppProps extends RouteConfigComponentProps {}
 const App = (props: AppProps) => {
   const { staticContext, route } = props
-  setStyle(staticContext as Context, App.name, style)
+  // setStyle(staticContext as Context, App.name, style)
   return (
-    <Fragment>
+    <div className='app'>
       <Helmet>
         <title>react music - 音乐伴你行</title>
         <meta charSet='utf-8' />
@@ -28,12 +30,16 @@ const App = (props: AppProps) => {
         ></meta>
       </Helmet>
 
-      <Header />
+      <GlobalStyle />
+      <IconStyle />
+      <i className='iconfont'>&#xe62b;</i>
+
+      {/* <Header />
       <main>
         <Switch>{renderRoutes(route?.routes)}</Switch>
       </main>
-      <Footer />
-    </Fragment>
+      <Footer /> */}
+    </div>
   )
 }
 
