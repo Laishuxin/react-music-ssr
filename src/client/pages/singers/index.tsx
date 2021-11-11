@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react'
 import { Helmet } from 'react-helmet'
-import PageTitle from '../components/common/page-title'
+import PageTitle from '../../components/common/page-title'
 export default function Singer() {
   return (
     <Fragment>

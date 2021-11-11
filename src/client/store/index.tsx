@@ -2,7 +2,7 @@ import { configureStore } from '@reduxjs/toolkit'
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux'
 import reduxPromise from 'redux-promise'
 import counterReducer from './counter-slice'
-import { INIT_STATE, IS_SSR } from '@/shared/constant'
+import { INIT_STATE } from '@/shared/constant'
 
 export function getStore() {
   let preloadedState
