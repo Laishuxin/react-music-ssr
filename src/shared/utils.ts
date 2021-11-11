@@ -14,13 +14,3 @@ export const once = <Fn extends (...args: any[]) => any>(fn: Fn) => {
     return fn.apply(this, args)
   }
 }
-
-// export const setStyle = (context: StaticContext, style: string) => {
-//   if (!context) {
-//     return
-//   }
-//   if (!context.css) {
-//     context.css = []
-//   }
-//   context.css.push(style)
-// }
