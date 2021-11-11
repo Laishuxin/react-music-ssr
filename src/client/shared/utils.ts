@@ -1,4 +1,4 @@
-import { Context } from 'types'
+import { Context } from '@/types'
 export * from '@/shared/utils'
 
 export const setStyle = (
@@ -13,5 +13,15 @@ export const setStyle = (
     if (!context.css.has(key)) {
       context.css.set(key, style)
     }
+  }
+}
+
+export function formatCount(count: number) {
+  if (count <= 0) {
+    return count + ''
+  } else if (count <= 1000000000) {
+    return (count / 10000).toFixed(1) + '万'
+  } else {
+    return (count / 1000000000).toFixed(1) + '亿'
   }
 }

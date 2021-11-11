@@ -25,6 +25,6 @@
       "@/*": ["./src/*"]
     }
   },
-  "include": ["src/**/*", "types/*", "*"],
+  "include": ["src/**/*", "src/types/*", "*"],
   "exclude": ["dist"]
 }

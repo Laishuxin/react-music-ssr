@@ -26,6 +26,7 @@
     "@reduxjs/toolkit": "^1.6.2",
     "@types/react-helmet": "^6.1.4",
     "@types/styled-components": "^5.1.15",
+    "@types/swiper": "^4.4.12",
     "autoprefixer": "^10.3.1",
     "axios": "^0.23.0",
     "classnames": "^2.3.1",
@@ -43,6 +44,7 @@
     "redux-promise": "^0.6.0",
     "serve-static": "^1.14.1",
     "styled-components": "^5.3.3",
+    "swiper": "4.5.1",
     "ts-node": "^10.1.0"
   },
   "devDependencies": {

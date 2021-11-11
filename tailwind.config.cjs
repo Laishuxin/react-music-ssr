@@ -36,6 +36,7 @@ module.exports = {
       px: '1px',
       spacing: '2rem',
       'lg-spacing': '16rem',
+      'full': '100%',
       0: '0px',
       0.5: '0.125rem',
       1: '0.25rem',

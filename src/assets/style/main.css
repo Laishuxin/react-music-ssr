@@ -2,8 +2,12 @@
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
 
-.noWrap {
+.no-wrap {
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
+}
+
+.swiper-pagination-bullet.swiper-pagination-bullet-active {
+  background: #5046e5;
 }
