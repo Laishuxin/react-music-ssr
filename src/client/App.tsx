@@ -1,19 +1,20 @@
-import React, { Fragment } from 'react'
+import React from 'react'
 import { Helmet } from 'react-helmet'
 import { Switch } from 'react-router-dom'
 import { RouteConfigComponentProps, renderRoutes } from 'react-router-config'
 import { Context } from 'types/index'
-import Header from './components/common/header'
-import Footer from './components/common/footer'
 import { setStyle } from './shared/utils'
-import { GlobalStyle } from './style'
-import { IconStyle } from '@/assets/iconfont/iconfont'
-// import style from './index.css'
+import resetCss from '@/assets/style/reset.css'
+import fontCss from '@/assets/iconfont/iconfont.css'
+import mainCss from '@/assets/style/main.css'
+import Home from './pages/home'
 
 interface AppProps extends RouteConfigComponentProps {}
 const App = (props: AppProps) => {
   const { staticContext, route } = props
-  // setStyle(staticContext as Context, App.name, style)
+  setStyle(staticContext as Context, 'reset-css', resetCss)
+  setStyle(staticContext as Context, 'font-css', fontCss)
+  setStyle(staticContext as Context, 'main-css', mainCss)
   return (
     <div className='app'>
       <Helmet>
@@ -30,15 +31,7 @@ const App = (props: AppProps) => {
         ></meta>
       </Helmet>
 
-      <GlobalStyle />
-      <IconStyle />
-      <i className='iconfont'>&#xe62b;</i>
-
-      {/* <Header />
-      <main>
-        <Switch>{renderRoutes(route?.routes)}</Switch>
-      </main>
-      <Footer /> */}
+      <Home {...props} />
     </div>
   )
 }
