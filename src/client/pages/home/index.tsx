@@ -9,7 +9,7 @@ const Home = (props: HomeProps) => {
   const { route } = props
   return (
     <div className='home'>
-      <header className='header fixed z-50 w-full'>
+      <header className='header fixed z-10 w-full'>
         <Top />
         <Tab />
       </header>

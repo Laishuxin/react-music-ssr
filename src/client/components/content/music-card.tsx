@@ -1,32 +1,29 @@
 import React, { useEffect, useState } from 'react'
-import loadingSrc from '@/assets/loadingSrc.png'
 import { formatCount } from '@/client/shared/utils'
+import LazyImage from '../common/lazy-image'
 
 export interface MusicCardProps extends React.HTMLAttributes<any> {
   lazy?: boolean
   src: string
-  loadingSrc?: string
-  errorSrc?: string
+  placeholder?: string
   alt?: string
   title: string
   playCount: number
 }
 
 const DEFAULT_PROPS: Required<
-  Pick<MusicCardProps, 'loadingSrc' | 'errorSrc' | 'lazy' | 'alt'>
+  Pick<MusicCardProps, 'placeholder' | 'lazy' | 'alt'>
 > = {
   lazy: false,
-  loadingSrc,
+  placeholder: 'lightgray',
   alt: 'img not found',
-  errorSrc: loadingSrc,
 } as const
 
 export const MusicCard: React.FC<MusicCardProps> = (props: MusicCardProps) => {
   const {
     lazy,
     src,
-    loadingSrc,
-    errorSrc,
+    placeholder,
     title,
     alt,
     playCount,
@@ -34,19 +31,6 @@ export const MusicCard: React.FC<MusicCardProps> = (props: MusicCardProps) => {
     ...restProps
   } = props as MusicCardProps & typeof DEFAULT_PROPS
 
-  const [currentSrc, setCurrentSrc] = useState(loadingSrc)
-  useEffect(() => {
-    const img = new Image()
-    img.src = src
-    img.onload = function () {
-      setCurrentSrc(src)
-    }
-    img.onerror = function () {
-      setCurrentSrc(errorSrc)
-    }
-  }, [errorSrc, src])
-
-  // TODO(rushui 2021-11-11): lazy load
   // TODO(rushui 2021-11-11): mask
   return (
     <div
@@ -55,7 +39,13 @@ export const MusicCard: React.FC<MusicCardProps> = (props: MusicCardProps) => {
     >
       <div className='music-card__cover'>
         <div className='img-wrapper'>
-          <img src={currentSrc} alt={alt} className='w-full rounded-md' />
+          <LazyImage
+            src={src}
+            height={'100%'}
+            width={'100%'}
+            placeholder={placeholder}
+            className='w-full rounded-md'
+          />
         </div>
       </div>
 

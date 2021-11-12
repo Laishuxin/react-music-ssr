@@ -52,7 +52,10 @@ export interface ScrollRef {
 }
 
 export const Scroll = forwardRef(
-  (props: React.PropsWithChildren<ScrollProps>, ref: Ref<ScrollRef>) => {
+  (
+    props: React.PropsWithChildren<ScrollProps>,
+    ref: Ref<ScrollRef | undefined>,
+  ) => {
     const {
       children,
       wrapperHeight,
@@ -83,10 +86,10 @@ export const Scroll = forwardRef(
           click,
           scrollX: !isVertical,
           scrollY: isVertical,
+          observeDOM: true,
           mouseWheel: {
-            speed: 20,
+            speed: 10,
             invert: false,
-            easeTime: 200,
           },
           useTransition: true,
           pullDownRefresh: {

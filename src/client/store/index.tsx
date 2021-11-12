@@ -1,7 +1,9 @@
 import { configureStore } from '@reduxjs/toolkit'
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux'
 import reduxPromise from 'redux-promise'
-import counterReducer from './counter-slice'
+import recommendReducer, {
+  RECOMMEND_SLICE_NAME,
+} from '../pages/recommend/slice'
 import { INIT_STATE } from '@/shared/constant'
 
 export function getStore() {
@@ -9,11 +11,12 @@ export function getStore() {
   // @ts-ignore
   if (!import.meta.env.SSR) {
     // @ts-ignore
+    // redux-promise
     preloadedState = window[INIT_STATE]
   }
   return configureStore({
     reducer: {
-      counter: counterReducer,
+      [RECOMMEND_SLICE_NAME]: recommendReducer,
     },
     middleware(getDefaultMiddlewares) {
       return [reduxPromise, ...getDefaultMiddlewares()]

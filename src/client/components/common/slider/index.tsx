@@ -2,48 +2,69 @@ import React, { useEffect, useState } from 'react'
 import Swiper from 'swiper'
 import 'swiper/dist/css/swiper.css'
 
-export interface SliderProps {
-  list: { picUrl: string }[]
+export interface SliderProps<D extends { key: any }> {
+  dataSource: D[]
+  render(data: D): React.ReactNode
+  pagination?: boolean
+  delay?: number
+  disableOnInteraction?: boolean
+  loop?: boolean
 }
 
-export default function Slider(props: SliderProps) {
+const DEFAULT_PROPS: Required<
+  Pick<
+    SliderProps<any>,
+    'delay' | 'disableOnInteraction' | 'loop' | 'pagination'
+  >
+> = {
+  delay: 3000,
+  disableOnInteraction: false,
+  loop: true,
+  pagination: true,
+}
+
+export default function Slider<D extends { key: any }>(props: SliderProps<D>) {
   const [sliderSwiper, setSliderSwiper] = useState<null | Swiper>(null)
-  const { list } = props
+  const { dataSource, render, delay, disableOnInteraction, loop, pagination } =
+    props as Required<SliderProps<D>>
 
   useEffect(() => {
-    if (list.length && !sliderSwiper) {
+    if (dataSource.length && !sliderSwiper) {
       const newSliderSwiper = new Swiper('.slider-container', {
-        loop: true,
+        loop,
         autoplay: {
-          delay: 3000,
-          disableOnInteraction: false,
+          delay,
+          disableOnInteraction,
         },
-        pagination: { el: '.swiper-pagination' },
+        pagination: pagination ? { el: '.swiper-pagination' } : undefined,
       })
       setSliderSwiper(newSliderSwiper)
     }
-  }, [list.length, sliderSwiper])
+  }, [
+    dataSource.length,
+    delay,
+    disableOnInteraction,
+    loop,
+    pagination,
+    sliderSwiper,
+  ])
 
   return (
     <div className='relative flex justify-center box-border w-full h-full bg-white'>
-      <div className='slider-container relative rounded-lg top-2 w-full mx-4 h-56 overflow-hidden'>
+      <div className='slider-container relative z-10 rounded-lg top-2 w-full mx-4 h-full overflow-hidden'>
         <div className='swiper-wrapper'>
-          {list.map((item, index) => {
-            return (
-              <div className='swiper-slide' key={index}>
-                <div className='slider-nav'>
-                  <img
-                    src={item.picUrl}
-                    className='w-full h-56'
-                    alt='recommend'
-                  />
-                </div>
-              </div>
-            )
-          })}
+          {dataSource.map(item => (
+            <div className='swiper-slide' key={item.key}>
+              {render(item)}
+            </div>
+          ))}
         </div>
         <div className='swiper-pagination'></div>
       </div>
     </div>
   )
 }
+
+// eslint-disable-next-line no-extra-semi
+;(Slider as React.FC<SliderProps<any>>).displayName = 'slider'
+;(Slider as React.FC<SliderProps<any>>).defaultProps = DEFAULT_PROPS

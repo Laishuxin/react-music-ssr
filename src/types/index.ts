@@ -1,12 +1,11 @@
 import { StaticContext } from 'react-router'
+export * from './recommend'
+export * from './common'
 
 export interface Context extends StaticContext {
   css: Map<string, string>
 }
 
-export interface RecommendItem {
-  id: number
-  picUrl: string
-  playCount: number
-  name: string
+export interface BaseRequest {
+  code: number
 }

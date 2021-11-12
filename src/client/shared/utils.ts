@@ -24,3 +24,14 @@ export function formatCount(count: number) {
     return (count / 1000000000).toFixed(1) + '亿'
   }
 }
+
+export function formatItem<Item>(item: Item, keys: (keyof Item)[]) {
+  return keys.reduce((prev, curr) => {
+    prev[curr] = item[curr]
+    return prev
+  }, {} as Item)
+}
+
+export function formatList<Item>(list: Item[], keys: (keyof Item)[]) {
+  return list.map(item => formatItem(item, keys))
+}

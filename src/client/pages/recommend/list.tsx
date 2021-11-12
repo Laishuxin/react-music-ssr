@@ -1,6 +1,5 @@
 import React from 'react'
 import { RecommendItem } from '@/types'
-import { formatCount } from '@/client/shared/utils'
 import MusicCard from '@/client/components/content/music-card'
 
 export interface ListProps extends React.HTMLAttributes<any> {

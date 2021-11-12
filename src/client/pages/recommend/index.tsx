@@ -1,36 +1,55 @@
 import Slider from '@/client/components/common/slider'
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect, useMemo, useRef } from 'react'
 import RecommendList from './list'
 import Scroll, { ScrollRef } from '@/client/components/common/scroll'
+import { getBanner, getRecommendList } from '@/api/recommend'
+import { useAppDispatch, useAppSelector } from '@/client/store'
+import LazyImage from '@/client/components/common/lazy-image'
+import {
+  selectBannerList,
+  selectRecommendList,
+  setBannerList,
+  setRecommendList,
+} from './slice'
+import PreloadImage from '@/client/components/common/preload-image'
 
 function Recommend() {
   const scrollRef = useRef<ScrollRef>()
-  useEffect(() => {
-    scrollRef.current?.refresh()
-  }, [])
-  // mock
-  const bannerList = [1, 2, 3, 4].map(item => {
-    return {
-      picUrl:
-        'http://p1.music.126.net/ZYLJ2oZn74yUz5x8NBGkVA==/109951164331219056.jpg',
-    }
-  })
+  const dispatch = useAppDispatch()
+  const _bannerList = useAppSelector(selectBannerList)
+  const recommendList = useAppSelector(selectRecommendList)
 
-  const recommendList = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(item => {
-    return {
-      id: item,
-      picUrl:
-        'https://p1.music.126.net/fhmefjUfMD-8qtj3JKeHbA==/18999560928537533.jpg',
-      playCount: 17171122,
-      name: '朴树、许巍、李健、郑钧、老狼、赵雷',
-    }
-  })
+  // adapt
+  const bannerList = useMemo(
+    () =>
+      _bannerList.map(item => ({
+        key: item.bannerId,
+        src: item.pic,
+        targetId: item.targetId,
+      })),
+    [_bannerList],
+  )
+
+  useEffect(() => {
+    console.log(_bannerList.length)
+    _bannerList.length === 0 && dispatch(setBannerList(getBanner()))
+    recommendList.length === 0 && dispatch(setRecommendList(getRecommendList()))
+    // scrollRef.current?.refresh()
+  }, [_bannerList.length, dispatch, recommendList.length])
 
   return (
-    // @ts-ignore
     <Scroll className='fixed top-20 mt-2 bottom-0 w-full' ref={scrollRef}>
-      <div className='before absolute bg-current w-full h-44 -top-24 z-1'></div>
-      <Slider list={bannerList} />
+      <div className='before absolute bg-current w-full h-56 -top-36  z-1'></div>
+      <Slider
+        dataSource={bannerList}
+        render={item => (
+          <PreloadImage
+            src={item.src}
+            className='w-full h-80'
+            alt='recommend'
+          />
+        )}
+      />
       <RecommendList list={recommendList} />
     </Scroll>
   )
