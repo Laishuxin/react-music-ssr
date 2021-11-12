@@ -18,7 +18,7 @@ export const setStyle = (
 export function formatCount(count: number) {
   if (count < 10000) {
     return count + ''
-  } else if (count <= 10000000) {
+  } else if (count <= 100000000) {
     return (count / 10000).toFixed(1) + '万'
   } else {
     return (count / 1000000000).toFixed(1) + '亿'

@@ -3,7 +3,7 @@ import { NavLink } from 'react-router-dom'
 
 export default function Tab() {
   return (
-    <div className='tab flex justify-around items-center bg-current text-gray-300 h-11'>
+    <div className='tab flex justify-around items-center bg-current text-gray-300 h-11 border-t-2 border-b-2 border-solid border-current'>
       <NavLink
         to='/recommend'
         className='text-sm py-1 border-b-2 border-solid border-transparent'

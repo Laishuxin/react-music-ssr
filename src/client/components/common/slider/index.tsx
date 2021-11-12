@@ -26,8 +26,7 @@ export default function Slider(props: SliderProps) {
 
   return (
     <div className='relative flex justify-center box-border w-full h-full bg-white'>
-      <div className='before absolute -top-1 bg-current w-full h-32'></div>
-      <div className='slider-container relative rounded-lg top-2 w-full mx-2 h-56 overflow-hidden'>
+      <div className='slider-container relative rounded-lg top-2 w-full mx-4 h-56 overflow-hidden'>
         <div className='swiper-wrapper'>
           {list.map((item, index) => {
             return (

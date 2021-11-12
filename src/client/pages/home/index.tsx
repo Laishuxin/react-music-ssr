@@ -9,8 +9,10 @@ const Home = (props: HomeProps) => {
   const { route } = props
   return (
     <div className='home'>
-      <Top />
-      <Tab />
+      <header className='header fixed z-50 w-full'>
+        <Top />
+        <Tab />
+      </header>
       <main>
         <Switch>{renderRoutes(route?.routes)}</Switch>
       </main>

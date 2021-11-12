@@ -1,8 +1,13 @@
 import Slider from '@/client/components/common/slider'
-import React from 'react'
+import React, { useEffect, useRef } from 'react'
 import RecommendList from './list'
+import Scroll, { ScrollRef } from '@/client/components/common/scroll'
 
 function Recommend() {
+  const scrollRef = useRef<ScrollRef>()
+  useEffect(() => {
+    scrollRef.current?.refresh()
+  }, [])
   // mock
   const bannerList = [1, 2, 3, 4].map(item => {
     return {
@@ -13,7 +18,7 @@ function Recommend() {
 
   const recommendList = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(item => {
     return {
-      id: 1,
+      id: item,
       picUrl:
         'https://p1.music.126.net/fhmefjUfMD-8qtj3JKeHbA==/18999560928537533.jpg',
       playCount: 17171122,
@@ -22,11 +27,13 @@ function Recommend() {
   })
 
   return (
-    <div className='recommend'>
+    // @ts-ignore
+    <Scroll className='fixed top-20 mt-2 bottom-0 w-full' ref={scrollRef}>
+      <div className='before absolute bg-current w-full h-44 -top-24 z-1'></div>
       <Slider list={bannerList} />
       <RecommendList list={recommendList} />
-    </div>
+    </Scroll>
   )
 }
 
-export default React.memo(Recommend)
+export default Recommend
