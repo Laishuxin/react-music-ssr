@@ -25,8 +25,15 @@ const DEFAULT_PROPS: Required<
 
 export default function Slider<D extends { key: any }>(props: SliderProps<D>) {
   const [sliderSwiper, setSliderSwiper] = useState<null | Swiper>(null)
-  const { dataSource, render, delay, disableOnInteraction, loop, pagination } =
-    props as Required<SliderProps<D>>
+  const {
+    dataSource,
+    render,
+    delay,
+    disableOnInteraction,
+    loop,
+    pagination,
+    ...restProps
+  } = props as Required<SliderProps<D>>
 
   useEffect(() => {
     if (dataSource.length && !sliderSwiper) {
@@ -50,7 +57,10 @@ export default function Slider<D extends { key: any }>(props: SliderProps<D>) {
   ])
 
   return (
-    <div className='relative flex justify-center box-border w-full h-full bg-white'>
+    <div
+      className='relative flex justify-center box-border w-full h-full bg-white'
+      {...restProps}
+    >
       <div className='slider-container relative z-10 rounded-lg top-2 w-full mx-4 h-full overflow-hidden'>
         <div className='swiper-wrapper'>
           {dataSource.map(item => (

@@ -8,7 +8,9 @@ export interface PreloadImageProps extends HTMLAttributes<HTMLImageElement> {
   src: string
 }
 
-const DEFAULT_PROPS = {
+const DEFAULT_PROPS: Required<
+  Pick<PreloadImageProps, 'preloadSrc' | 'errorSrc'>
+> = {
   preloadSrc,
   errorSrc: preloadSrc,
 }
