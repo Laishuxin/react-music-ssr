@@ -10,7 +10,8 @@
   "license": "MIT",
   "scripts": {
     "dev": "nodemon --watch server.ts --watch src/server --exec \"yarn ts-node server.ts\"",
-    "dev:server": "json-server ./__json_server__/db.json --watch --port 7891",
+    "dev:server": "cross-env PORT=7891 node ./api-server/app.js",
+    "dev:mock-server": "json-server ./__json_server__/db.json --watch --port 7891",
     "build": "tsc -p tsconfig.prod.json && yarn build:client && yarn build:server && yarn copy-files",
     "build:client": "vite build --outDir dist/client",
     "build:server": "vite build --ssr src/client/entry-server.tsx --outDir dist/server",
