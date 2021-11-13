@@ -4,7 +4,6 @@ import RecommendList from './list'
 import Scroll, { ScrollRef } from '@/client/components/common/scroll'
 import { getBanner, getRecommendList } from '@/api/recommend'
 import { useAppDispatch, useAppSelector } from '@/client/store'
-import LazyImage from '@/client/components/common/lazy-image'
 import {
   selectBannerList,
   selectRecommendList,
@@ -12,6 +11,7 @@ import {
   setRecommendList,
 } from './slice'
 import PreloadImage from '@/client/components/common/preload-image'
+import Footer from '@/client/components/content/footer'
 
 function Recommend() {
   const scrollRef = useRef<ScrollRef>()
@@ -31,7 +31,6 @@ function Recommend() {
   )
 
   useEffect(() => {
-    console.log(_bannerList.length)
     _bannerList.length === 0 && dispatch(setBannerList(getBanner()))
     recommendList.length === 0 && dispatch(setRecommendList(getRecommendList()))
     // scrollRef.current?.refresh()

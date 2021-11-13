@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 import { Helmet } from 'react-helmet'
 import { Switch } from 'react-router-dom'
 import { RouteConfigComponentProps, renderRoutes } from 'react-router-config'
@@ -16,9 +16,8 @@ const App = (props: AppProps) => {
   setStyle(staticContext as Context, 'font-css', fontCss)
   setStyle(staticContext as Context, 'main-css', mainCss)
   return (
-    <div className='app'>
+    <Fragment>
       <Helmet>
-        <title>react music - 音乐伴你行</title>
         <meta charSet='utf-8' />
         <meta name='description' content='音乐伴你行' />
         <meta
@@ -32,7 +31,7 @@ const App = (props: AppProps) => {
       </Helmet>
 
       <Home {...props} />
-    </div>
+    </Fragment>
   )
 }
 
