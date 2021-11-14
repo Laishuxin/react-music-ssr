@@ -11,6 +11,7 @@ module.exports = {
     '\\.(jpg|ico|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$':
       '<rootDir>/testMocks/assetsMocks.js',
     '\\.(css|scss|less|sass|stylus)$': '<rootDir>/testMocks/styleMocks.js',
+    '^@/(.*)$': '<rootDir>/src/$1',
   },
   testRegex: '^.+\\.(spec|test)\\.(ts|tsx)$',
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'node'],

@@ -49,8 +49,8 @@ const DEFAULT_PROPS = {
 export interface ScrollRef {
   refresh(): void
   getBScroll(): BScroll | null | undefined
-  getScrollWrapperRef(): HTMLDivElement | null
-  getScrollContentRef(): HTMLDivElement | null
+  getScrollWrapperEl(): HTMLDivElement | null
+  getScrollContentEl(): HTMLDivElement | null
 }
 
 export const Scroll = forwardRef(
@@ -74,6 +74,7 @@ export const Scroll = forwardRef(
       onScroll,
       onPulldown,
       onPullup,
+      ...restProps
     } = props as ScrollProps & typeof DEFAULT_PROPS
     const scrollWrapperRef = useRef<null | HTMLDivElement>(null)
     const scrollContentRef = useRef<null | HTMLDivElement>(null)
@@ -181,10 +182,10 @@ export const Scroll = forwardRef(
       getBScroll() {
         return bScroll
       },
-      getScrollContentRef() {
+      getScrollContentEl() {
         return scrollContentRef.current
       },
-      getScrollWrapperRef() {
+      getScrollWrapperEl() {
         return scrollWrapperRef.current
       },
     }))
@@ -196,6 +197,7 @@ export const Scroll = forwardRef(
           height: wrapperHeight,
           ...style,
         }}
+        {...restProps}
       >
         <div className='scroll-content' ref={scrollContentRef}>
           {children}

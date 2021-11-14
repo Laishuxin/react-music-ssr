@@ -1,0 +1,33 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`horizontal-list should render the correct horizontal list 1`] = `
+<div
+  class="scroll-wrapper"
+  data-testid="test-horizontal-list"
+>
+  <div
+    class="scroll-content"
+    style="width: 0px;"
+  >
+    <div
+      class="horizontal-list flex flex-row"
+    >
+      <span
+        class="capsule rounded-lg p-1 text-current border-2 border-current border-solid horizontal-list-item flex-shrink-0 text-sm cursor-pointer active"
+      >
+        0
+      </span>
+      <span
+        class="capsule rounded-lg p-1 text-current border-2 border-current border-solid horizontal-list-item flex-shrink-0 text-sm cursor-pointer border-transparent text-black"
+      >
+        1
+      </span>
+      <span
+        class="capsule rounded-lg p-1 text-current border-2 border-current border-solid horizontal-list-item flex-shrink-0 text-sm cursor-pointer border-transparent text-black"
+      >
+        2
+      </span>
+    </div>
+  </div>
+</div>
+`;

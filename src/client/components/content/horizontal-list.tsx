@@ -17,7 +17,7 @@ const DEFAULT_PROPS: RequiredPick<HorizontalListProps, 'defaultIndex'> = {
 const HorizontalList: React.FC<HorizontalListProps> = (
   props: HorizontalListProps,
 ) => {
-  const { title, list, defaultIndex, className, onChange } =
+  const { title, list, defaultIndex, className, onChange, ...restProps } =
     props as HorizontalListProps & typeof DEFAULT_PROPS
   const [currentIndex, setCurrentIndex] = useState(defaultIndex)
   const horizontalListRef = useRef<HTMLDivElement | null>(null)
@@ -31,19 +31,25 @@ const HorizontalList: React.FC<HorizontalListProps> = (
     )
     // horizontalListRef.current?.style.setProperty('width', `${width}px`)
     scrollRef.current
-      ?.getScrollContentRef()
+      ?.getScrollContentEl()
       ?.style.setProperty('width', `${width}px`)
   }, [])
 
   const handleClick = useCallback(
     (index: number) => {
+      if (currentIndex === index) return
       setCurrentIndex(index)
       onChange?.(index)
     },
-    [onChange],
+    [currentIndex, onChange],
   )
   return (
-    <Scroll className={className} direction='horizontal' ref={scrollRef}>
+    <Scroll
+      className={className}
+      direction='horizontal'
+      ref={scrollRef}
+      {...restProps}
+    >
       <div className='horizontal-list flex flex-row' ref={horizontalListRef}>
         {title ? (
           <Capsule
@@ -54,8 +60,10 @@ const HorizontalList: React.FC<HorizontalListProps> = (
         {list.map((item, index) => (
           <Capsule
             className={
-              'flex-shrink-0 text-sm' +
-              (index === currentIndex ? '' : ' border-transparent text-black')
+              'horizontal-list-item flex-shrink-0 text-sm cursor-pointer' +
+              (index === currentIndex
+                ? ' active'
+                : ' border-transparent text-black')
             }
             onClick={() => handleClick(index)}
             key={index}
