@@ -11,7 +11,6 @@ import {
   setRecommendList,
 } from './slice'
 import PreloadImage from '@/client/components/common/preload-image'
-import Footer from '@/client/components/content/footer'
 
 function Recommend() {
   const scrollRef = useRef<ScrollRef>()

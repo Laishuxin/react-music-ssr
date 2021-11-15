@@ -1,4 +1,11 @@
 import { Context } from '@/types'
+export const sizeMap = {
+  sm: 4,
+  md: 6,
+  lg: 8,
+  xl: 12,
+}
+export const isVoid = (v: any) => v == null || v === ''
 
 export const setStyle = (
   context: Context | undefined,

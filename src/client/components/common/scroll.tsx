@@ -53,7 +53,7 @@ export interface ScrollRef {
   getScrollContentEl(): HTMLDivElement | null
 }
 
-export const Scroll = forwardRef(
+const Scroll = forwardRef(
   (
     props: React.PropsWithChildren<ScrollProps>,
     ref: Ref<ScrollRef | undefined>,

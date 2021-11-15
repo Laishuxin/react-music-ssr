@@ -3,22 +3,28 @@ import React, { useCallback, useEffect, useRef, useState } from 'react'
 import Scroll, { ScrollRef } from '../common/scroll'
 import Capsule from '../common/capsule'
 
-export interface HorizontalListProps extends CommonProps {
+type Data = {
+  name: string
+  key: any
+}
+
+export interface HorizontalListProps<D extends Data> extends CommonProps {
   title?: string
-  list: { name: string }[]
+  list: D[]
   defaultIndex?: number
-  onChange?(index: number): void
+  onChange?(item: D | undefined): void
 }
 
-const DEFAULT_PROPS: RequiredPick<HorizontalListProps, 'defaultIndex'> = {
-  defaultIndex: 0,
+const DEFAULT_PROPS: RequiredPick<HorizontalListProps<any>, 'defaultIndex'> = {
+  defaultIndex: -1,
 }
 
-const HorizontalList: React.FC<HorizontalListProps> = (
-  props: HorizontalListProps,
-) => {
+/**
+ * @default {props.defaultIndex=-1} select nothing
+ */
+const HorizontalList = <D extends Data>(props: HorizontalListProps<D>) => {
   const { title, list, defaultIndex, className, onChange, ...restProps } =
-    props as HorizontalListProps & typeof DEFAULT_PROPS
+    props as HorizontalListProps<D> & typeof DEFAULT_PROPS
   const [currentIndex, setCurrentIndex] = useState(defaultIndex)
   const horizontalListRef = useRef<HTMLDivElement | null>(null)
   const scrollRef = useRef<ScrollRef>()
@@ -36,10 +42,14 @@ const HorizontalList: React.FC<HorizontalListProps> = (
   }, [])
 
   const handleClick = useCallback(
-    (index: number) => {
-      if (currentIndex === index) return
+    (index: number, item: D) => {
+      if (currentIndex === index) {
+        setCurrentIndex(-1)
+        onChange?.(undefined)
+        return
+      }
       setCurrentIndex(index)
-      onChange?.(index)
+      onChange?.(item)
     },
     [currentIndex, onChange],
   )
@@ -65,8 +75,8 @@ const HorizontalList: React.FC<HorizontalListProps> = (
                 ? ' active'
                 : ' border-transparent text-black')
             }
-            onClick={() => handleClick(index)}
-            key={index}
+            onClick={() => handleClick(index, item)}
+            key={item.key + index}
             text={item.name}
           />
         ))}
@@ -74,6 +84,7 @@ const HorizontalList: React.FC<HorizontalListProps> = (
     </Scroll>
   )
 }
+
 HorizontalList.displayName = 'horizontal-list'
 HorizontalList.defaultProps = DEFAULT_PROPS
 export default HorizontalList

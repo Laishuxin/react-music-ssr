@@ -4,7 +4,7 @@ import HorizontalList, { HorizontalListProps } from '../horizontal-list'
 
 describe('horizontal-list', () => {
   const fn = jest.fn()
-  const props: HorizontalListProps = {
+  const props: HorizontalListProps<{ name: string }> = {
     list: [{ name: '0' }, { name: '1' }, { name: '2' }],
     onChange: fn,
   }
