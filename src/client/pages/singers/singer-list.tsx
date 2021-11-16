@@ -6,7 +6,7 @@ import React, {
   useImperativeHandle,
   useRef,
 } from 'react'
-import SingerItem from './singer-item'
+import SingerListItem from './singer-list-item'
 
 export interface SingerListProps extends CommonProps {
   list: Singer[]
@@ -49,7 +49,7 @@ const SingerList = React.forwardRef(
           {...restProps}
         >
           {list.map(singer => (
-            <SingerItem
+            <SingerListItem
               data={singer}
               onClick={() => handleClick(singer)}
               key={singer.id}

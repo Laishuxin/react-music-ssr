@@ -35,6 +35,7 @@ export const useSingers = () => {
     dispatch(setSingerList([]))
   }, [dispatch])
 
+  // TODO(rushui 2021-11-16): 代码优化
   const addSingers = useCallback(
     (offset: number) => {
       dispatch(setStat('loading'))
@@ -53,9 +54,26 @@ export const useSingers = () => {
     [currentAlpha, currentCategory, dispatch],
   )
 
+  const setSingers = useCallback(() => {
+    dispatch(setStat('loading'))
+    getSingerList({
+      offset: 0,
+      alpha: currentAlpha,
+      category: currentCategory,
+    })
+      .then(list => {
+        dispatch(setSingerList(list))
+        dispatch(setOffset(0))
+        dispatch(setStat('success'))
+      })
+      .catch(e => dispatch(setStat('error')))
+  }, [currentAlpha, currentCategory, dispatch])
+
   useEffect(() => {
-    addSingers(0)
-  }, [addSingers])
+    if (singerList.length === 0) {
+      addSingers(0)
+    }
+  }, [addSingers, singerList])
 
   return {
     isLoading: stat === 'loading',
@@ -70,5 +88,6 @@ export const useSingers = () => {
     reset,
     clear,
     addSingers,
-  }
+    setSingers,
+  } as const
 }

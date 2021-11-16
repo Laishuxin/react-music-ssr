@@ -76,7 +76,7 @@ const HorizontalList = <D extends Data>(props: HorizontalListProps<D>) => {
                 : ' border-transparent text-black')
             }
             onClick={() => handleClick(index, item)}
-            key={item.key + index}
+            key={item.key}
             text={item.name}
           />
         ))}

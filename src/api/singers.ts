@@ -1,8 +1,9 @@
 import { formatList, isVoid } from '@/client/shared/utils'
 import { Page, Singer } from '@/types'
-import { categoryMap, ERR_OK } from '.'
+import { categoryMap } from '.'
 import { get } from './http'
 
+const ERR_OK = 200
 interface GetSingerRequestOptions extends Page {
   category?: string
   alpha?: string

@@ -1,13 +1,14 @@
-import React, { Fragment, useCallback, useEffect, useRef } from 'react'
+import React, { Fragment, useCallback, useRef } from 'react'
 import PageTitle from '../../components/common/page-title'
 import HorizontalList from '@/client/components/content/horizontal-list'
-import { categoryTypes, alphaTypes } from '@/api'
+import { categoryTypes, alphaTypes, getSingerList } from '@/api'
 import SingerList, { SingerListRef } from './singer-list'
 import { Singer } from '@/types'
-import { useAppSelector, useAppDispatch } from '@/client/store'
-import { selectSingerList, setOffset } from './common/slice'
 import { useSingers } from './common/use-singers'
 import Loading from '@/client/components/common/loading'
+import { useDebouncedCallback } from 'use-debounce'
+import { setSingerList, setStat } from './common/slice'
+import { Store } from '@/client/store'
 
 const Singers = () => {
   const {
@@ -16,6 +17,7 @@ const Singers = () => {
     setCurrentCategory,
     clear,
     addSingers,
+    setSingers,
     isLoading,
   } = useSingers()
 
@@ -43,12 +45,16 @@ const Singers = () => {
     [clear, setCurrentAlpha],
   )
 
-  const handlePullDown = () => {
-    console.log('pull down')
-    clear()
-    addSingers(0)
-  }
+  const handlePullDown = useDebouncedCallback(
+    () => {
+      console.log('pull down')
+      setSingers()
+    },
+    500,
+    { leading: true, trailing: false },
+  )
 
+  // TODO: debounce trailing
   const handlePullUp = () => {
     addSingers(singerList.length)
   }
@@ -85,6 +91,15 @@ const Singers = () => {
       </div>
     </Fragment>
   )
+}
+
+Singers.loadData = function (store: Store) {
+  const singerList = getSingerList()
+  singerList
+    .then(() => store.dispatch(setStat('success')))
+    .catch(() => store.dispatch(setStat('error')))
+  store.dispatch(setSingerList(singerList))
+  return singerList
 }
 
 export default Singers

@@ -72,7 +72,15 @@ const createServer = async (
       }
 
       const context: any = {}
-      const { appHTML, initState } = render(url, context)
+      const { renderAppHTML, store, promises } = render(url, context)
+      try {
+        await Promise.all(promises)
+      } catch (e) {
+        console.error(`Warning(server-side): pre-fetch data error with`, e)
+      }
+      const initState = store.getState()
+      // console.log(initState)
+      const appHTML = renderAppHTML()
 
       if (context.url) {
         // Somewhere a `<Redirect>` was rendered
@@ -100,9 +108,13 @@ const createServer = async (
 
       const html = template.replace(`<!--app-html-->`, appHTML)
       res.status(200).set({ 'Content-Type': 'text/html' }).end(html)
-    } catch (e: any) {
+    } catch (e) {
       !isProd && vite.ssrFixStacktrace(e)
+      // @ts-ignore
+      // e is any type with stack
       console.error(e.stack)
+      // @ts-ignore
+      // e is any type with stack
       res.status(500).end(e.stack)
     }
   })

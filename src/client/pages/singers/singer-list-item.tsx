@@ -6,7 +6,7 @@ export interface SingerItemProps extends React.HTMLAttributes<HTMLLIElement> {
   data: Singer
 }
 
-const SingerItem: React.FC<SingerItemProps> = React.memo(
+const SingerListItem: React.FC<SingerItemProps> = React.memo(
   (props: SingerItemProps) => {
     const { data: singer, className, ...restProps } = props
     return (
@@ -18,6 +18,7 @@ const SingerItem: React.FC<SingerItemProps> = React.memo(
         {...restProps}
       >
         <LazyImage
+          className='w-20 h-20'
           width='5rem'
           height='5rem'
           src={singer.picUrl}
@@ -29,5 +30,5 @@ const SingerItem: React.FC<SingerItemProps> = React.memo(
   },
 )
 
-SingerItem.displayName = 'singer-item'
-export default SingerItem
+SingerListItem.displayName = 'singer-list-item'
+export default SingerListItem
